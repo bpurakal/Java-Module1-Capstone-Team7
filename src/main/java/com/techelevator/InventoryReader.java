@@ -2,37 +2,49 @@ package com.techelevator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Stack;
-
+import java.util.TreeMap;
 
 public class InventoryReader {
-	
+
+	private static Map<String, Stack<Items>> inventory = new TreeMap<>();
+
 	public Map generateInventory() throws FileNotFoundException {
-		
+
 		File inputFile = getInventoryFile();
-		
-		Stack<Items> itemsStack = new Stack<>();  // come back and give this a better name
-		
-		Map<String, Stack<Items>> inventory = new HashMap<>();
-		
+
 		try (Scanner fileScanner = new Scanner(inputFile)) {
-	        while (fileScanner.hasNextLine()) { // while it can read file until no more new lines
-	            String line = fileScanner.nextLine();// grab the new line
-	            String[] itemIDNameAndPrice = line.split("|");
-	            for(int i = 0; i < 5; i++) {
-	            		Items test = new Items(itemIDNameAndPrice[1], new BigDecimal ("itemIDNameAndPrice[2]"));
-	            		itemsStack.push(test);
-	            }
-	            inventory.put(itemIDNameAndPrice[0], itemsStack);
-	        }
-	    }
+			while (fileScanner.hasNextLine()) { // while it can read file until no more new lines
+				String line = fileScanner.nextLine();// grab the new line
+				String[] itemIDNameAndPrice = line.split("\\|");
+				Stack<Items> itemsStack = new Stack<>();
+				if (itemIDNameAndPrice[0].startsWith("A")) {
+					for (int i = 0; i < 5; i++) {
+						itemsStack.push(new ChipItem(itemIDNameAndPrice[1], new BigDecimal(itemIDNameAndPrice[2])));
+					}
+				} else if (itemIDNameAndPrice[0].startsWith("B")) {
+					for (int i = 0; i < 5; i++) {
+						itemsStack.push(new CandyItem(itemIDNameAndPrice[1], new BigDecimal(itemIDNameAndPrice[2])));
+					}
+				} else if (itemIDNameAndPrice[0].startsWith("C")) {
+					for (int i = 0; i < 5; i++) {
+						itemsStack.push(new DrinkItem(itemIDNameAndPrice[1], new BigDecimal(itemIDNameAndPrice[2])));
+					}
+				} else if (itemIDNameAndPrice[0].startsWith("D")) {
+					for (int i = 0; i < 5; i++) {
+						itemsStack.push(new GumItem(itemIDNameAndPrice[1], new BigDecimal(itemIDNameAndPrice[2])));
+					}
+				}
+				inventory.put(itemIDNameAndPrice[0], itemsStack);
+			}
+
+		}
 		return inventory;
 	}
+
 	@SuppressWarnings("resource")
 	private static File getInventoryFile() {
 
@@ -45,6 +57,10 @@ public class InventoryReader {
 			System.exit(1); // Ends the program
 		}
 		return inventoryFile;
+	}
+
+	public static Map<String, Stack<Items>> getInventory() {
+		return inventory;
 	}
 
 }

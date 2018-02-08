@@ -2,7 +2,7 @@ package com.techelevator;
 
 import java.math.BigDecimal;
 
-public class Items {
+public abstract class Items {
 	private String name;
 	private BigDecimal price;
 	
@@ -17,6 +17,11 @@ public class Items {
 
 	public BigDecimal getPrice() {
 		return price;
+	}
+	
+	@Override
+	public String toString() {
+		return name + " , " + price;
 	}
 
 }
