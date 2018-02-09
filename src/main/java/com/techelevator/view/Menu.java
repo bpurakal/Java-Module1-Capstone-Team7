@@ -46,7 +46,7 @@ public class Menu {
 				out.flush();
 			}
 		}
-		return null;
+		return new BigDecimal(userInput).setScale(2);
 	}
 
 	private Object getChoiceFromUserInput(Object[] options) {
