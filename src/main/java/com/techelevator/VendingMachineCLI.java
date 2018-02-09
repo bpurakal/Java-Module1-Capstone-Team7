@@ -31,6 +31,7 @@ public class VendingMachineCLI {
 
 	public void run() throws FileNotFoundException {
 		VendingMachine VM500 = new VendingMachine();
+		PurchaseBasket yourCart = new PurchaseBasket();
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
@@ -50,8 +51,7 @@ public class VendingMachineCLI {
 				}
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				// do purchase
-				choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTION,
-						"\nYour current balance is: " + VM500.getBalance());
+				choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTION, "\nYour current balance is: " + VM500.getBalance());
 
 				if (choice.equals(PUCHASE_DISPLAY_FEED)) {
 					VM500.addToBalance(menu.getAmountFromUserInput());
@@ -61,12 +61,13 @@ public class VendingMachineCLI {
 					System.out.println("What would you like to buy?");
 					Scanner userInput = new Scanner(System.in);
 					String purchaseKey = userInput.nextLine();
-					System.out.println(VM500.purchaseItem(purchaseKey));
+					yourCart.addToBasket(VM500.purchaseItem(purchaseKey));
+					System.out.println(VM500.getBoughtItem());
 				}
 
 				if (choice.equals(PURCHASE_DISPLAY_FINAL)) {
 					System.out.println(VM500.returnChange());
-		
+					System.out.println(yourCart.consumeBasket());
 				}
 			}
 

@@ -36,7 +36,7 @@ public class Menu {
 		while(!userInput.equals("done")){
 			out.println();
 			out.print("Please enter an amount >>> ");
-			out.print("Type done when finished adding money >>> ");
+			out.println("Type done when finished adding money >>> ");
 			out.flush();
 
 			userInput = in.nextLine();
