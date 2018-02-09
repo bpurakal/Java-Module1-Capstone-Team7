@@ -52,18 +52,15 @@ public class VendingMachineCLI {
 				// do purchase
 				while (true) {
 					choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTION,
-							"\nYour current balance is: " + VM500.getBalance());
+							"\nCurrent Money Provided: " + VM500.getBalance());
 					if (choice.equals(PUCHASE_DISPLAY_FEED)) {
-						while (true) {
-							BigDecimal amount = menu.getAmountFromUserInput();
-							if (amount != null) {
-								VM500.addToBalance(menu.getAmountFromUserInput());
-							} else {
-								break;
-							}
+						BigDecimal amount = menu.getAmountFromUserInput();
+						while (amount != null) {
+							VM500.addToBalance(amount);
+							System.out.println("Your current balance is: $" + VM500.getBalance());
+							amount = menu.getAmountFromUserInput();
 						}
 					}
-
 					if (choice.equals(PURCHASE_DISPLAY_SELECT)) {
 						System.out.println("What would you like to buy?");
 						Scanner userInput = new Scanner(System.in);

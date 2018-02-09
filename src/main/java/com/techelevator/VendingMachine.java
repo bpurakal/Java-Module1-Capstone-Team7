@@ -49,8 +49,8 @@ public class VendingMachine {
 			}
 		}
 		
-		changeReturned = "Your change is: " + quarterCount + " Quarter(s)" + dimeCount + " Dime(s)" + nickelCount
-				+ " Nickels \n" + "Your new balance is " + balance;
+		changeReturned = "Your change is: " + quarterCount + " Quarter(s) " + dimeCount + " Dime(s) " + nickelCount
+				+ " Nickel(s) \n" + "Your new balance is $" + balance;
 		
 		return changeReturned;
 	}

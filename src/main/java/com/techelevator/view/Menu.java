@@ -31,7 +31,7 @@ public class Menu {
 	}
 
 	public BigDecimal getAmountFromUserInput() {
-		String userInput = null;
+		String userInput;
 		out.println();
 		out.print("Please enter an amount >>> ");
 		out.flush();
@@ -41,12 +41,13 @@ public class Menu {
 			try {
 				return new BigDecimal(userInput).setScale(2);
 			} catch (NumberFormatException ex) {
+				out.println();
 				out.println("Please enter a valid number.");
 				out.println();
 				out.flush();
 			}
 		}
-		return new BigDecimal(userInput).setScale(2);
+		return null;
 	}
 
 	private Object getChoiceFromUserInput(Object[] options) {
