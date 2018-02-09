@@ -52,7 +52,7 @@ public class VendingMachineCLI {
 				// do purchase
 				while (true) {
 					choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTION,
-							"\nCurrent Money Provided: " + VM500.getBalance());
+							"\nCurrent Money Provided: $" + VM500.getBalance());
 					if (choice.equals(PUCHASE_DISPLAY_FEED)) {
 						BigDecimal amount = menu.getAmountFromUserInput();
 						while (amount != null) {
@@ -66,17 +66,24 @@ public class VendingMachineCLI {
 						Scanner userInput = new Scanner(System.in);
 						String purchaseKey = userInput.nextLine();
 						Item boughtItem = null;
-						try {
-							boughtItem = VM500.purchaseItem(purchaseKey);
-							yourCart.addToBasket(boughtItem);
-							System.out.println(boughtItem);
-						} catch (OutOfStockException e) {
-							System.out.println(e.getMessage());
-							choice.equals(PURCHASE_DISPLAY_SELECT);
-						} catch (InsufficientFundsException e) {
-							System.out.println(e.getMessage());
+						if(VM500.getInventory().containsKey(purchaseKey)) {
+							try {
+								boughtItem = VM500.purchaseItem(purchaseKey);
+								yourCart.addToBasket(boughtItem);
+								System.out.println(boughtItem);
+							} catch (OutOfStockException e) {
+								System.out.println(e.getMessage());
+								choice.equals(PURCHASE_DISPLAY_SELECT);
+							} catch (InsufficientFundsException e) {
+								System.out.println(e.getMessage());
+								choice.equals(PURCHASE_DISPLAY_SELECT);
+							}
+						} 
+						else {
+							System.out.println("Please choose a valid item ID");
 							choice.equals(PURCHASE_DISPLAY_SELECT);
 						}
+						
 					}
 
 					if (choice.equals(PURCHASE_DISPLAY_FINAL)) {

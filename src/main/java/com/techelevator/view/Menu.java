@@ -31,13 +31,25 @@ public class Menu {
 	}
 
 	public BigDecimal getAmountFromUserInput() {
+		String one = "1";
+		String two = "2";
+		String five = "5";
+		String ten = "10";
+		String twenty = "20";
+		String fifty = "50";
+		String onehundred = "100";
 		String userInput;
 		out.println();
-		out.print("Please enter an amount >>> ");
+		out.println("Please enter only (1, 2, 5, 10, 20, 50, 100)");
+		out.print("Please enter an amount, type [done] when finished >>> $");
 		out.flush();
 
 		userInput = in.nextLine();
-		if (!userInput.toLowerCase().equals("done")) {
+
+		if ((!userInput.toLowerCase().equals("done"))
+				&& (userInput.equals(one) || userInput.equals(two) || userInput.equals(five) || userInput.equals(ten)
+						|| userInput.equals(twenty) || userInput.equals(fifty) || userInput.equals(onehundred))) {
+
 			try {
 				return new BigDecimal(userInput).setScale(2);
 			} catch (NumberFormatException ex) {
