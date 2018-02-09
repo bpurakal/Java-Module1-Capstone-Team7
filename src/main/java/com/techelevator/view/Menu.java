@@ -16,22 +16,30 @@ public class Menu {
 		this.in = new Scanner(input);
 	}
 
-	public Object getChoiceFromOptions(Object[] options) {
+	public Object getChoiceFromOptions(Object[] options, String message) {
 		Object choice = null;
-		while(choice == null) {
+		while (choice == null) {
 			displayMenuOptions(options);
+			System.out.println(message);
 			choice = getChoiceFromUserInput(options);
 		}
 		return choice;
 	}
 
+	public Object getChoiceFromOptions(Object[] options) {
+		return getChoiceFromOptions(options, "");
+	}
+
 	public BigDecimal getAmountFromUserInput() {
-		for(;;){
+		String userInput = "";
+		userInput = userInput.toLowerCase();
+		while(!userInput.equals("done")){
 			out.println();
-			out.print("Please enter an amount >>>");
+			out.print("Please enter an amount >>> ");
+			out.print("Type done when finished adding money >>> ");
 			out.flush();
 
-			String userInput = in.nextLine();
+			userInput = in.nextLine();
 			try {
 				return new BigDecimal(userInput).setScale(2);
 			} catch(NumberFormatException ex) {
@@ -40,32 +48,36 @@ public class Menu {
 				out.flush();
 			}
 		}
+		return new BigDecimal(userInput);
 	}
 
 	private Object getChoiceFromUserInput(Object[] options) {
 		Object choice = null;
+		out.print("\nPlease choose an option >>> ");
+		out.flush();
 		String userInput = in.nextLine();
 		try {
 			int selectedOption = Integer.valueOf(userInput);
-			if(selectedOption > 0 && selectedOption <= options.length) {
+			if (selectedOption > 0 && selectedOption <= options.length) {
 				choice = options[selectedOption - 1];
 			}
-		} catch(NumberFormatException e) {
-			// eat the exception, an error message will be displayed below since choice will be null
+		} catch (NumberFormatException e) {
+			// eat the exception, an error message will be displayed below since choice will
+			// be null
 		}
-		if(choice == null) {
-			out.println("\n*** "+userInput+" is not a valid option ***\n");
+		if (choice == null) {
+			out.println("\n*** " + userInput + " is not a valid option ***\n");
 		}
 		return choice;
 	}
 
 	private void displayMenuOptions(Object[] options) {
 		out.println();
-		for(int i = 0; i < options.length; i++) {
-			int optionNum = i+1;
-			out.println(optionNum+") "+options[i]);
+		for (int i = 0; i < options.length; i++) {
+			int optionNum = i + 1;
+			out.println(optionNum + ") " + options[i]);
 		}
-		out.print("\nPlease choose an option >>> ");
 		out.flush();
 	}
+
 }

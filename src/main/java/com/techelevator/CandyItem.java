@@ -8,7 +8,7 @@ public class CandyItem extends Item {
 		super(name, price);
 	}
 	
-	public String getSound() {
+	public String makeSound() {
 		return "Chew Chew, Yum!";
 	}
 

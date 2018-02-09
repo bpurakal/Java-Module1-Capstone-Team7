@@ -16,8 +16,11 @@ public class VendingMachineCLI {
 	private static final String PUCHASE_DISPLAY_FEED = "Feed Money";
 	private static final String PURCHASE_DISPLAY_SELECT = "Select Product";
 	private static final String PURCHASE_DISPLAY_FINAL = "Finish Transaction";
-
 	private static final String[] PURCHASE_MENU_OPTION = { PUCHASE_DISPLAY_FEED, PURCHASE_DISPLAY_SELECT,
+			PURCHASE_DISPLAY_FINAL };
+	private static final String PUCHASE_DISPLAY_GO_TO_PURCHASE_MENU = "Exit To Menu";
+
+	private static final String[] FEED_MENU_OPTION = { PUCHASE_DISPLAY_FEED, PURCHASE_DISPLAY_SELECT,
 			PURCHASE_DISPLAY_FINAL };
 
 	private Menu menu;
@@ -47,11 +50,11 @@ public class VendingMachineCLI {
 				}
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				// do purchase
-				choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTION);
+				choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTION,
+						"\nYour current balance is: " + VM500.getBalance());
 
 				if (choice.equals(PUCHASE_DISPLAY_FEED)) {
-						VM500.addToBalance(menu.getAmountFromUserInput());
-						System.out.println("Your balance is " + VM500.getBalance());
+					VM500.addToBalance(menu.getAmountFromUserInput());
 				}
 
 				if (choice.equals(PURCHASE_DISPLAY_SELECT)) {
@@ -60,10 +63,10 @@ public class VendingMachineCLI {
 					String purchaseKey = userInput.nextLine();
 					System.out.println(VM500.purchaseItem(purchaseKey));
 				}
-				
-				if(choice.equals(PURCHASE_DISPLAY_FINAL)) {
-					VM500.returnChange();
-					//break;
+
+				if (choice.equals(PURCHASE_DISPLAY_FINAL)) {
+					System.out.println(VM500.returnChange());
+		
 				}
 			}
 

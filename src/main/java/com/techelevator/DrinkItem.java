@@ -8,7 +8,7 @@ public class DrinkItem extends Item {
 		super(name, price);
 	}
 
-	public String getSound() {
+	public String makeSound() {
 		return "Glug Glug, Yum!";
 	}
 
