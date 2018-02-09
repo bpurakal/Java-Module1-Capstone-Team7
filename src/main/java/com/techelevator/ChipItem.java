@@ -2,7 +2,7 @@ package com.techelevator;
 
 import java.math.BigDecimal;
 
-public class ChipItem extends Items {
+public class ChipItem extends Item {
 
 	public ChipItem(String name, BigDecimal price) {
 		super(name, price);

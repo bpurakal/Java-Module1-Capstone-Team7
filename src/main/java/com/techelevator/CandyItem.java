@@ -2,7 +2,7 @@ package com.techelevator;
 
 import java.math.BigDecimal;
 
-public class CandyItem extends Items {
+public class CandyItem extends Item {
 
 	public CandyItem(String name, BigDecimal price) {
 		super(name, price);

@@ -10,7 +10,7 @@ import java.util.TreeMap;
 
 public class InventoryReader {
 
-	private static Map<String, Stack<Items>> inventory = new TreeMap<>();
+	private static Map<String, Stack<Item>> inventory = new TreeMap<>();
 
 	public Map generateInventory() throws FileNotFoundException {
 
@@ -20,7 +20,7 @@ public class InventoryReader {
 			while (fileScanner.hasNextLine()) { // while it can read file until no more new lines
 				String line = fileScanner.nextLine();// grab the new line
 				String[] itemIDNameAndPrice = line.split("\\|");
-				Stack<Items> itemsStack = new Stack<>();
+				Stack<Item> itemsStack = new Stack<>();
 				if (itemIDNameAndPrice[0].startsWith("A")) {
 					for (int i = 0; i < 5; i++) {
 						itemsStack.push(new ChipItem(itemIDNameAndPrice[1], new BigDecimal(itemIDNameAndPrice[2])));
@@ -45,7 +45,6 @@ public class InventoryReader {
 		return inventory;
 	}
 
-	@SuppressWarnings("resource")
 	private static File getInventoryFile() {
 
 		File inventoryFile = new File("vendingmachine.csv");
@@ -59,7 +58,7 @@ public class InventoryReader {
 		return inventoryFile;
 	}
 
-	public static Map<String, Stack<Items>> getInventory() {
+	public static Map<String, Stack<Item>> getInventory() {
 		return inventory;
 	}
 

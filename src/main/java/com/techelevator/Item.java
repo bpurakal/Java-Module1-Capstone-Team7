@@ -2,11 +2,11 @@ package com.techelevator;
 
 import java.math.BigDecimal;
 
-public abstract class Items {
+public abstract class Item {
 	private String name;
 	private BigDecimal price;
 	
-	public Items (String name, BigDecimal price) {
+	public Item (String name, BigDecimal price) {
 		this.name = name;
 		this.price = price;
 	}
