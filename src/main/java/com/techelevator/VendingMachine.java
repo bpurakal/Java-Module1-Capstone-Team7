@@ -10,25 +10,25 @@ public class VendingMachine {
 	private BigDecimal balance = new BigDecimal(0);
 
 	private Map<String, Stack<Item>> inventory;
-	
-	private Item boughtItem = null;
 
 	public VendingMachine() throws FileNotFoundException {
 		InventoryReader generatingInventory = new InventoryReader();
 		inventory = generatingInventory.generateInventory();
 	}
 
-	public Item purchaseItem(String slotID) {
+	public Item purchaseItem(String slotID) throws OutOfStockException, InsufficientFundsException {
 		Item item = null;
 		if (inventory.get(slotID).size() > 0) {
 			if (balance.compareTo(inventory.get(slotID).peek().getPrice()) >= 0) {
 				balance = balance.subtract(inventory.get(slotID).peek().getPrice());
-				//return inventory.get(slotID).pop();
-				boughtItem = inventory.get(slotID).pop();
+				Item boughtItem = inventory.get(slotID).pop();
 				return boughtItem;
+			} else {
+				throw new InsufficientFundsException("No mo money");
 			}
+		} else {
+			throw new OutOfStockException("Item out of stock");
 		}
-		return item;
 	}
 
 	public String returnChange() {
@@ -65,10 +65,6 @@ public class VendingMachine {
 
 	public void addToBalance(BigDecimal amountSubmitted) {
 		balance = balance.add(amountSubmitted);
-	}
-	
-	public Item getBoughtItem() {
-		return boughtItem;
 	}
 
 }

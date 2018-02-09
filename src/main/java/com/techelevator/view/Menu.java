@@ -31,24 +31,22 @@ public class Menu {
 	}
 
 	public BigDecimal getAmountFromUserInput() {
-		String userInput = "";
-		userInput = userInput.toLowerCase();
-		while(!userInput.equals("done")){
-			out.println();
-			out.print("Please enter an amount >>> ");
-			out.println("Type done when finished adding money >>> ");
-			out.flush();
+		String userInput = null;
+		out.println();
+		out.print("Please enter an amount >>> ");
+		out.flush();
 
-			userInput = in.nextLine();
+		userInput = in.nextLine();
+		if (!userInput.toLowerCase().equals("done")) {
 			try {
 				return new BigDecimal(userInput).setScale(2);
-			} catch(NumberFormatException ex) {
+			} catch (NumberFormatException ex) {
 				out.println("Please enter a valid number.");
 				out.println();
 				out.flush();
 			}
 		}
-		return new BigDecimal(userInput);
+		return null;
 	}
 
 	private Object getChoiceFromUserInput(Object[] options) {

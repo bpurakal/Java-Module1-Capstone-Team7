@@ -1,8 +1,7 @@
 package com.techelevator;
 
 import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 import com.techelevator.view.Menu;
@@ -51,27 +50,49 @@ public class VendingMachineCLI {
 				}
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				// do purchase
-				choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTION, "\nYour current balance is: " + VM500.getBalance());
+				while (true) {
+					choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTION,
+							"\nYour current balance is: " + VM500.getBalance());
+					if (choice.equals(PUCHASE_DISPLAY_FEED)) {
+						while (true) {
+							BigDecimal amount = menu.getAmountFromUserInput();
+							if (amount != null) {
+								VM500.addToBalance(menu.getAmountFromUserInput());
+							} else {
+								break;
+							}
+						}
+					}
 
-				if (choice.equals(PUCHASE_DISPLAY_FEED)) {
-					VM500.addToBalance(menu.getAmountFromUserInput());
+					if (choice.equals(PURCHASE_DISPLAY_SELECT)) {
+						System.out.println("What would you like to buy?");
+						Scanner userInput = new Scanner(System.in);
+						String purchaseKey = userInput.nextLine();
+						Item boughtItem = null;
+						try {
+							boughtItem = VM500.purchaseItem(purchaseKey);
+							yourCart.addToBasket(boughtItem);
+							System.out.println(boughtItem);
+						} catch (OutOfStockException e) {
+							System.out.println(e.getMessage());
+							choice.equals(PURCHASE_DISPLAY_SELECT);
+						} catch (InsufficientFundsException e) {
+							System.out.println(e.getMessage());
+							choice.equals(PURCHASE_DISPLAY_SELECT);
+						}
+					}
+
+					if (choice.equals(PURCHASE_DISPLAY_FINAL)) {
+						System.out.println(VM500.returnChange());
+						System.out.println(yourCart.consumeBasket());
+						break;
+					}
 				}
 
-				if (choice.equals(PURCHASE_DISPLAY_SELECT)) {
-					System.out.println("What would you like to buy?");
-					Scanner userInput = new Scanner(System.in);
-					String purchaseKey = userInput.nextLine();
-					yourCart.addToBasket(VM500.purchaseItem(purchaseKey));
-					System.out.println(VM500.getBoughtItem());
-				}
-
-				if (choice.equals(PURCHASE_DISPLAY_FINAL)) {
-					System.out.println(VM500.returnChange());
-					System.out.println(yourCart.consumeBasket());
-				}
 			}
 
 		}
+
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {

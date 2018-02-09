@@ -15,7 +15,7 @@ public class PurchaseBasket {
 		String consumeSounds = "";
 		if (!currentBasket.isEmpty()) {
 			for (Item element : currentBasket) {
-				 consumeSounds.concat(element.consume()+ "\n");
+				consumeSounds = consumeSounds.concat(element.consume()+ "\n");
 			}
 		}
 		
